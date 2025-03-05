@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Verification</title>
+    <link rel="icon" href="waka2.jpg">
+    <link rel="stylesheet" href="verification.css"
+    
+  
+</head>
+<body>
+    <div class="container">
+        <img src="waka2.jpg" alt="">
+        <h2>Student Verification</h2>
+        <form id="verificationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="reg_no">Registration Number:</label>
+            <input type="text" id="reg_no" name="reg_no" placeholder="eg 23/1098" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="state">State:</label>
+            <select id="state" name="state" onchange="populateLGA()">
+                <option value=""> Select State </option>
+            </select>
+
+            <label for="lga">LGA:</label>
+            <select id="lga" name="lga">
+                <option value="">-Select LGA-</option>
+            </select>
+
+            <button type="submit" class="submit-btn">Submit Verification</button>
+        </form>
+        <div id="notification"></div>
+        <!-- Loader spinner hidden by default -->
+        <div id="loader" class="loader" style="display: none;"></div>
+    </div>
+
+    <!-- Firebase JS SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBGm1KO0_WxER9wAAwg9fSsNUCrP2wsFtw",
+            authDomain: "waka-verification.firebaseapp.com",
+            projectId: "waka-verification",
+            storageBucket: "waka-verification.firebasestorage.app",
+            messagingSenderId: "65331623743",
+            appId: "1:65331623743:web:dcf44d5087872791e9058a",
+            measurementId: "G-9B5J9Y8DNP"
+        };
+
+   
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+    
+        document.getElementById('verificationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const reg_no = document.getElementById('reg_no').value;
+            const phone = document.getElementById('phone').value;
+            const state = document.getElementById('state').value;
+            const lga = document.getElementById('lga').value;
+
+            const notification = document.getElementById('notification');
+            const loader = document.getElementById('loader');
+
+     
+            loader.style.display = "block";
+
+            try {
+            
+                const emailQuery = query(collection(db, "student_verifications"), where("email", "==", email));
+                const regNoQuery = query(collection(db, "student_verifications"), where("reg_no", "==", reg_no));
+
+                const emailQuerySnapshot = await getDocs(emailQuery);
+                const regNoQuerySnapshot = await getDocs(regNoQuery);
+
+                if (!emailQuerySnapshot.empty || !regNoQuerySnapshot.empty) {
+                    notification.textContent = "❌ Already Verified: This email or registration number is already registered.";
+                    notification.style.color = "red";
+                    notification.style.fontSize = "16px";
+                    notification.style.marginTop = "20px";
+                } else {
+                    await addDoc(collection(db, "student_verifications"), {
+                        name,
+                        email,
+                        reg_no,
+                        phone,
+                        state,
+                        lga
+                    });
+
+                    notification.textContent = "✅ Verification data submitted successfully!";
+                    notification.style.color = "green";
+                    notification.style.fontSize = "16px";
+                    notification.style.marginTop = "20px";
+
+               
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);  
+
+                    // Clear the form after submission
+                    document.getElementById('verificationForm').reset();
+                }
+            } catch (error) {
+                notification.textContent = "❌ Error submitting data: " + error.message;
+                notification.style.color = "red";
+                notification.style.fontSize = "16px";
+                notification.style.marginTop = "20px";
+            } finally {
+                // Hide loader after submission or error
+                loader.style.display = "none";
+            }
+
+            // Hide notification after 5 seconds
+            setTimeout(() => { notification.textContent = ''; }, 5000);
+        });
+    </script>
+
+    <script src="script1.js"></script>
+ 
+</body>
+</html>

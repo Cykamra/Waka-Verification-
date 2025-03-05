@@ -1,0 +1,109 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .header-style {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #ffffff;
+            border-bottom: 3px solid green;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-style img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .header-style p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .main-style {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-style h1 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .main-style span {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .main-style p {
+            font-size: 1.3em;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        #gren {
+            color: green;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .main-button {
+            width: 300px;
+            height: 3em;
+            margin-top: 30px;
+            font-size: 17px;
+            font-weight: bold;
+            color: white;
+            background: #5bff15;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.5s, color 0.5s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        .main-button:hover {
+            background: white;
+            color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-style {
+            text-align: center;
+            padding: 15px;
+            background: #2c3e50;
+            color: white;
+            font-size: 1em;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 50px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0.9;
+        }
+
+        .footer-style p {
+            margin: 5px 0;
+        }
+
+        .footer-style p:last-child {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
